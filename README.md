@@ -28,6 +28,13 @@ for Jane and John Doe, and the default 10 books).
 
 
 # How to Run
-There is an executable file named JavaLibrary.jar in the root directory of this project. To open the project from a command prompt being run in the root directory, run the following command:
+There is an executable file named JavaLibrary.jar in the root directory of this project. To open the project, see the following steps:
 
-`java -jar JavaLibrary.jar`
+1. Download the .zip file and unzip. This unzipped folder is the program root folder.
+
+2. Create a command prompt for the root folder # Example: C:\Users\(Your Username Here)\Desktop\JavaLibrary-master>
+
+3. Run the JavaLibrary.jar file with the following command (Java 13 must be installed).
+> java -jar JavaLibrary.jar
+
+4. The program window should open, and you'll be able to login with the default accounts listed above.
