@@ -9,11 +9,13 @@ are two kinds of Users in this system: Patrons, and Librarians.
 ### Librarian account:
 
 Name: Jane Doe
+
 UserID: 12345abc
 
 ### Patron account:
 
 Name: John Doe
+
 UserID: 54321cba
 
 Experiment with both Patron and Librarian accounts to see their limits and privileges
