@@ -28,4 +28,4 @@ for Jane and John Doe, and the default 10 books).
 # How to Run
 There is an executable file named JavaLibrary.jar in the root directory of this project. To open the project from a command prompt being run in the root directory, run the following command:
 
-'java -jar JavaLibrary.jar'
+`java -jar JavaLibrary.jar`
