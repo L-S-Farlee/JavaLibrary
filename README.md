@@ -5,12 +5,12 @@ This program is a library management system. You are able to create, delete, sav
 check out, and return books (as well as create, view and remove patron profiles). There 
 are two kinds of Users in this system: Patrons, and Librarians.
 
-##Librarian account:
+## Librarian account:
 
 Name: Jane Doe
 UserID: 12345abc
 
-##Patron account:
+## Patron account:
 
 Name: John Doe
 UserID: 54321cba
@@ -23,6 +23,6 @@ for Patrons and Librarians. These are .dat files stored in the Data folder. If t
 are deleted, default files will be made to replace them (recreating the default profiles
 for Jane and John Doe, and the default 10 books).
 
-#How to Run
+# How to Run
 There is an executable file named JavaLibrary.jar in the root directory of this project. To open the project from a command prompt being run in the root directory, run the following command:
 >'java -jar JavaLibrary.jar'
