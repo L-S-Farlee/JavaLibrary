@@ -30,8 +30,8 @@ public class Book implements Serializable {
 
 	//Constructor
 	public Book(String author, String title, String ISBN, int yearPub,
-					String genre, String publisher, String location, 
-					String media, int pageNum, String language, int copyNum) {
+		String genre, String publisher, String location, 
+		String media, int pageNum, String language, int copyNum) {
 		
 		/* 
 		Constructor uses if-else block to test a few conditions before creating new book.
@@ -108,30 +108,29 @@ public class Book implements Serializable {
 	@Override
 	public String toString() {
 		String tempStr ="~~/~~/~~ " + bookTitle + " | " + bookAuthor + " | " 
-				+ bookID + " | " + bookYearPub + " | " + bookGenre + " | " 
-				+ bookPublisher + " | " + bookLocation + " | " + bookMediaType + " | " 
-				+ bookPageCount + " | " + bookLanguage;
+			+ bookID + " | " + bookYearPub + " | " + bookGenre + " | " 
+			+ bookPublisher + " | " + bookLocation + " | " + bookMediaType + " | " 
+			+ bookPageCount + " | " + bookLanguage;
 		return tempStr;
 	}
 	
 	//Formatting for Get Book Information window
 	public String infoDisplay() {
 		String tempStr = "Book Title : " + bookTitle + "\nAuthor : " + bookAuthor + "\nBook ID (ISBN_Copy#) : " 
-				+ bookID + "\nYear Published : " + bookYearPub + "\nGenre : " + bookGenre + "\nPublisher : " 
-				+ bookPublisher + "\nLocation (Floor/Section) : " + bookLocation + "\nMedia Type : " + bookMediaType 
-				+ "\nPage Count : " + bookPageCount + "\nLanguage : " + bookLanguage + "\nStatus : " + getBookStatus() ;
+			+ bookID + "\nYear Published : " + bookYearPub + "\nGenre : " + bookGenre + "\nPublisher : " 
+			+ bookPublisher + "\nLocation (Floor/Section) : " + bookLocation + "\nMedia Type : " + bookMediaType 
+			+ "\nPage Count : " + bookPageCount + "\nLanguage : " + bookLanguage + "\nStatus : " + getBookStatus() ;
 		return tempStr;
 	}
 	
 	//Formatting for Your Checked Books Information window
 	public String infoShort() {
 		String tempStr =  bookAuthor + " | " + bookTitle + "\n"
-				+ bookID;
+			+ bookID;
 		return tempStr;
 	}
 	
 	// Getter methods
-	
 	public String getBookAuthor() {
 		return this.bookAuthor;
 	}
@@ -177,7 +176,6 @@ public class Book implements Serializable {
 	}
 	
 	// Setter methods
-
 	public void setBookAvailable(boolean b) {
 		if (Librarian.isAdmin() || Librarian.isUser()) {
 			bookAvailable = b;
