@@ -32,7 +32,7 @@ public class TestClassBook {
 		LibraryData.addBook(testingBookClass);
 		System.out.println("a.) Book created.\n");
 		
-		//b. Get the value of the Book object's Author, Title, Language, and PageCount
+		//b.) Get the value of the Book object's Author, Title, Language, and PageCount
 		String testAuthor = testingBookClass.getBookAuthor();
 		String testTitle = testingBookClass.getBookTitle();
 		String testLanguage = testingBookClass.getBookLanguage();
