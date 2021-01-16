@@ -609,6 +609,10 @@ public class MainForm extends Application {
                     a.setContentText("User not found. Please try again, or seek technical support.");
                     //show the dialog 
                     a.show();
+                    //reset text fields
+                    loginFirst.setText("");
+                    loginLast.setText("");
+                    loginID.setText("");
     			}
             } 
         }; 
@@ -629,6 +633,7 @@ public class MainForm extends Application {
     		try {
     			LibrarianData.writeLibrarianFile();
         		PatronData.writePatronFile();
+        		LibraryData.writeLibrary();
     		} catch (IOException ex) {
     			ex.printStackTrace();
     		}
@@ -637,6 +642,7 @@ public class MainForm extends Application {
     	else if (Librarian.isUser()) {
     		try {
         		PatronData.writePatronFile();
+        		LibraryData.writeLibrary();
     		} catch (IOException ex) {
     			ex.printStackTrace();
     		}
@@ -759,9 +765,19 @@ public class MainForm extends Application {
                         a.setContentText("All forms must be filled with appropriate data (use only numbers "
                         		+ "\nfor years/pages/copy#). Please check all forms and try again. \n");
                         a.show();
-                        addBookWindow.close();
         				return;
             		}
+            		//test to see if book already exists
+            		if (LibraryData.searchBook(loginID.getText() + "_" + loginCopyNum.getText())) {
+            			//set alert type 
+                        a.setAlertType(AlertType.ERROR); 
+                        //set content text 
+                        a.setContentText("This book already exists in this database." 
+                        		+ "\nPlease check all forms and try again.\n");
+                        a.show();
+            			return;
+            		}
+            		
             		//If the user's input is formatted correctly, process in as new Book object
             		//and update the listview in primaryStage
         			try {

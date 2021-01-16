@@ -62,6 +62,15 @@ public class LibraryData {
 		}
 		return false;
 	}
+	//Overloaded method for a BookID string instead of Book object.
+	public static boolean searchBook(String givenID) {
+		for (int i = 0 ; i < LibraryData.getBookArrayListSize() ; i++) {
+			if (givenID.equals(getBookAtIndex(i).getBookID())) {
+				return true;
+			};
+		}
+		return false;
+	}
 	
 	//Search ArrayList to find index of specific book
 	public static int searchBookIndex(Book book) {
@@ -92,10 +101,12 @@ public class LibraryData {
 				    FileInputStream inFile = new FileInputStream("Data/LibraryData.dat");
 				    BufferedInputStream inBuffer = new BufferedInputStream(inFile);
 				    ObjectInputStream inObj = new ObjectInputStream(inBuffer);
-				    
 				    BookArrayList = (ArrayList<Book>) inObj.readObject();
-				    //System.out.println("READ RESULT : "+BookArrayList.toString());
+				    //close input stream
 				    inObj.close();
+				    //Print result if successful.
+				    System.out.println("READ RESULT : Successful");
+				    
 				} 
 				catch (IOException e) {
 				     e.printStackTrace();
@@ -151,9 +162,14 @@ public class LibraryData {
 				ObjectOutputStream outObj = new ObjectOutputStream(outBuffer);
 				outObj.writeObject(BookArrayList);
 				outObj.close();
+				//Print result if successful.
+			    System.out.println("LIBRARYDATA: Write to data successful.");
 			} catch (IOException e) {
 				e.printStackTrace();
+				System.out.println("Error: [LibraryData] Write to data successful.");
 			}
+		} else {
+			System.out.println("ERROR! User cannot write Library data.");
 		}
 	}
 
