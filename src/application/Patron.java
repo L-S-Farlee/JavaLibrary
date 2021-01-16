@@ -6,13 +6,14 @@ import java.io.Serializable;
 
 public class Patron extends UserAccount implements Serializable {
 	//Create a serialVersionUID for serializing the objects stored in ArrayLists 
-	private static final long serialVersionUID = -3169606166597312778L;
+	private static final long serialVersionUID = 2L;
+	
+	//Field to use as a divider for text strings.
+	private static final String DIV = "~~~";
 
 	//Constructor
 	Patron(String lastName, String firstName, String givenID) {
-		name = lastName+","+firstName;
-		ID = givenID;
-		holderID = lastName+","+firstName+"~~~"+ID;
+		super(lastName+","+firstName, givenID, lastName+","+firstName+DIV+givenID);
 	}
 	
 	public String PatronInfoDisplay() {
@@ -20,6 +21,4 @@ public class Patron extends UserAccount implements Serializable {
 		String patronInfo = nameArray[1] + " " + nameArray[0] + "  |  " + this.getID();
 		return patronInfo;
 	}
-
-	
 }

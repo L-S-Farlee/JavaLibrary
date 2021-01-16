@@ -41,6 +41,7 @@ public class MainForm extends Application {
 	private static Button btCheckOutBook;
 	private static Button btReturnBook;
 	private static Button btCheckedBooks;
+	private static Button btSort;
 	//These are the buttons for the admin controls
 	private static Button btAddBook;
 	private static Button btRemoveBook;
@@ -51,6 +52,9 @@ public class MainForm extends Application {
 	//User object currently logged in
 	Librarian userLibrarian;
 	Patron userPatron;
+	
+	//variable to detect if books are currently sorted by title or author
+	private static String currentSort = "author";
 	
 	//User name for window display
 	public static String currentUserName = "";
@@ -81,6 +85,7 @@ public class MainForm extends Application {
 		btAddPatron = new Button("Add Patron");
 		btRemovePatron = new Button("Remove Patron");
 		btPatronInfo = new Button("Patron Info");
+		btSort = new Button("Sort by Author/Title");
 		
 		//Create a pane for the UI
 		BorderPane borderPane = new BorderPane();
@@ -109,9 +114,10 @@ public class MainForm extends Application {
 		
 		//Create a subpane for the adminBookControls
 		VBox adminBookControls = new VBox();
-		adminBookControls.getChildren().addAll(btAddBook,btRemoveBook);
-		btAddBook.setMinSize(100, 80);
-		btRemoveBook.setMinSize(100, 80);
+		adminBookControls.getChildren().addAll(btAddBook,btRemoveBook,btSort);
+		btAddBook.setMinSize(120, 70);
+		btRemoveBook.setMinSize(120, 70);
+		btSort.setMinSize(120, 70);
 		adminBookControls.setAlignment(Pos.TOP_CENTER);
 		adminBookControls.setSpacing(35);
 		adminBookControls.setPadding(new Insets(35,30,35,30));
@@ -158,6 +164,8 @@ public class MainForm extends Application {
 		Stage primaryStage = new Stage();
 		primaryStage.setTitle("LibraryCatalog");
 		primaryStage.setScene(LibraryCatalog);
+		//sort BookArrayList
+		LibraryData.sortBookArrayList("author");
 		primaryStage.show();
 		
 		//Event handler for btCheckOutBook
@@ -181,14 +189,14 @@ public class MainForm extends Application {
 			}
 		};
 		
-		//Event handler for btBookInfo
+		//Event handler for btCheckedBooks
 		EventHandler<ActionEvent> getCheckedBooks = new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) { 
 				getCheckedBooks();
 			}
 		};
 		
-		//Event handler for btBookInfo
+		//Event handler for btAddBook
 		EventHandler<ActionEvent> addBook = new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) { 
 				if (Librarian.isAdmin()) {
@@ -201,7 +209,7 @@ public class MainForm extends Application {
 			}
 		};
 		
-		//Event handler for btBookInfo
+		//Event handler for btRemoveBook
 		EventHandler<ActionEvent> removeBook = new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) { 
 				//Create an alert
@@ -228,24 +236,50 @@ public class MainForm extends Application {
 			}
 		};
 		
-		//Event handler for btBookInfo
+		//Event handler for btAddPatron
 		EventHandler<ActionEvent> addPatron = new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) { 
 				AddPatronForm();
 			}
 		};
 				
-		//Event handler for btBookInfo
+		//Event handler for btRemovePatron
 		EventHandler<ActionEvent> removePatron = new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) { 
 				RemovePatronForm();
 			}
 		};
 		
-		//Event handler for btBookInfo
+		//Event handler for btPatronInfo
 		EventHandler<ActionEvent> infoPatron = new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) { 
 				PatronInfoForm();
+			}
+		};
+		
+		//Event handler for btSort
+		EventHandler<ActionEvent> sortDisplay = new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent e) {
+				if (currentSort.equalsIgnoreCase("author")) {
+					LibraryData.sortBookArrayList("title");
+					//After sorting BookArrayList in LibraryData, refreshing display in-app
+					try {
+						fillBookListView();
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+					currentSort = "title";
+				}
+				else if (currentSort.equalsIgnoreCase("title")) {
+					LibraryData.sortBookArrayList("author");
+					//After sorting BookArrayList in LibraryData, refreshing display in-app
+					try {
+						fillBookListView();
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+					currentSort = "author";
+				}
 			}
 		};
 		
@@ -259,6 +293,7 @@ public class MainForm extends Application {
 		btAddPatron.setOnAction(addPatron);
 		btRemovePatron.setOnAction(removePatron);
 		btPatronInfo.setOnAction(infoPatron);
+		btSort.setOnAction(sortDisplay);
 		
 		primaryStage.setOnCloseRequest( event -> CloseAttempt() );
 	} 
@@ -787,7 +822,7 @@ public class MainForm extends Application {
 		        				test2, loginLang.getText(), test3);
 		        		//Add the book to the ArrayList, sort, write to file, fill Listview
 		        		LibraryData.addBook(newBook);
-		        		LibraryData.sortBookArrayList();
+		        		LibraryData.sortBookArrayList("author");
 		        		LibraryData.writeLibrary();
 		        		fillBookListView();
 		        		//Create an alert to show success
