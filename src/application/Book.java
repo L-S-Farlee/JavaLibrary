@@ -1,9 +1,12 @@
 package application;
 import java.io.*;
 
-//This class is used to create all books in the library system,
-//recording their information by providing objects for storage
-//and manipulation
+/*
+This class is used to create all books in the library system,
+recording their information by providing objects for storage
+and manipulation
+*/
+
 public class Book implements Serializable {
 	
 	//Create a serialVersionUID for serializing the objects stored in ArrayLists 
@@ -25,6 +28,7 @@ public class Book implements Serializable {
 	These 2 fields are used to determine if the book is checked out
 	and if so, which patron has checked it out.
 	*/
+	
 	private boolean bookAvailable = true;
 	private String currentHolder = "";
 
@@ -108,29 +112,30 @@ public class Book implements Serializable {
 	@Override
 	public String toString() {
 		String tempStr ="~~/~~/~~ " + bookTitle + " | " + bookAuthor + " | " 
-			+ bookID + " | " + bookYearPub + " | " + bookGenre + " | " 
-			+ bookPublisher + " | " + bookLocation + " | " + bookMediaType + " | " 
-			+ bookPageCount + " | " + bookLanguage;
+				+ bookID + " | " + bookYearPub + " | " + bookGenre + " | " 
+				+ bookPublisher + " | " + bookLocation + " | " + bookMediaType + " | " 
+				+ bookPageCount + " | " + bookLanguage;
 		return tempStr;
 	}
 	
 	//Formatting for Get Book Information window
 	public String infoDisplay() {
 		String tempStr = "Book Title : " + bookTitle + "\nAuthor : " + bookAuthor + "\nBook ID (ISBN_Copy#) : " 
-			+ bookID + "\nYear Published : " + bookYearPub + "\nGenre : " + bookGenre + "\nPublisher : " 
-			+ bookPublisher + "\nLocation (Floor/Section) : " + bookLocation + "\nMedia Type : " + bookMediaType 
-			+ "\nPage Count : " + bookPageCount + "\nLanguage : " + bookLanguage + "\nStatus : " + getBookStatus() ;
+				+ bookID + "\nYear Published : " + bookYearPub + "\nGenre : " + bookGenre + "\nPublisher : " 
+				+ bookPublisher + "\nLocation (Floor/Section) : " + bookLocation + "\nMedia Type : " + bookMediaType 
+				+ "\nPage Count : " + bookPageCount + "\nLanguage : " + bookLanguage + "\nStatus : " + getBookStatus() ;
 		return tempStr;
 	}
 	
 	//Formatting for Your Checked Books Information window
 	public String infoShort() {
 		String tempStr =  bookAuthor + " | " + bookTitle + "\n"
-			+ bookID;
+				+ bookID;
 		return tempStr;
 	}
 	
 	// Getter methods
+	
 	public String getBookAuthor() {
 		return this.bookAuthor;
 	}
@@ -176,6 +181,7 @@ public class Book implements Serializable {
 	}
 	
 	// Setter methods
+
 	public void setBookAvailable(boolean b) {
 		if (Librarian.isAdmin() || Librarian.isUser()) {
 			bookAvailable = b;

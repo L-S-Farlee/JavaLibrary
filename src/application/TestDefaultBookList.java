@@ -56,7 +56,7 @@ public class TestDefaultBookList {
 		System.out.println(LibraryData.getBookArrayListSize());
 		
 		//Sort Library
-		LibraryData.sortBookArrayList();
+		LibraryData.sortBookArrayList("author");
 		
 		//Print out the new BookArrayList
 		System.out.println("The BookArrayList: \n"+LibraryData.displayBookArrayList().toString()+"\n");

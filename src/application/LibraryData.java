@@ -2,6 +2,7 @@ package application;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 //This class handles the management of the ArrayList holding
 //all Book objects in the library system
@@ -52,6 +53,14 @@ public class LibraryData {
 	public static void replaceBookAtIndex(Book book,int index) {
 		BookArrayList.set(index,book);
 	}
+
+	//Check out a currently available book, setting current user as holder.
+	public static void checkOutBook(Book b, UserAccount u) {
+		if (b.isAvailable() & Librarian.isUser()) {
+			b.setBookAvailable(false);
+			b.setBookHolder(u.getHolderID());
+		}
+	}
 	
 	//Search ArrayList to see if book already exists
 	public static boolean searchBook(Book book) {
@@ -62,6 +71,7 @@ public class LibraryData {
 		}
 		return false;
 	}
+	
 	//Overloaded method for a BookID string instead of Book object.
 	public static boolean searchBook(String givenID) {
 		for (int i = 0 ; i < LibraryData.getBookArrayListSize() ; i++) {
@@ -86,6 +96,17 @@ public class LibraryData {
 		}
 		else
 			return -1;
+	}
+	
+	//Give ArrayList in full as a String separate line-by-line
+	public static String displayBookArrayList() {
+		String temp = "";
+		
+		for (int i = 0 ; i < LibraryData.getBookArrayListSize() ; i++) {
+			temp += "\n"+getBookAtIndex(i).toString();
+		}
+		
+		return temp;
 	}
 	
 	//This method reads in the Library data file
@@ -115,6 +136,7 @@ public class LibraryData {
 				     e.printStackTrace();
 				}
 			}
+			//if no file for Book data is found, create a few default books and populate list.
 			else {
 				System.out.println("DATA FILE READ FAILED: No data file found for Library class. Continuing without reading.");
 				//If no data file found, add the default 10 books to BookArrayList.
@@ -179,28 +201,57 @@ public class LibraryData {
 			BookArrayList.clear();
 		}
 	}
-
-	//Give ArrayList in full as a String separate line-by-line
-	public static String displayBookArrayList() {
-		String temp = "";
-		
-		for (int i = 0 ; i < LibraryData.getBookArrayListSize() ; i++) {
-			temp += "\n"+getBookAtIndex(i).toString();
+	
+	/*
+	 The follow inner classes implement Comparator<T> and are used to sort the BookArrayList. 
+	 Two comparators are created: sort by author, and sort by title.
+	*/
+	
+	//Sort the LibraryData's BookArrayList by Title.
+	static class SortByTitle implements Comparator<Book> {
+		public int compare(Book b1, Book b2) {
+			String b1Title = b1.getBookTitle();
+	        String b2Title = b2.getBookTitle();
+	        //uses compareTo method of String class to compare author names
+	        return b1Title.compareTo(b2Title);
 		}
 		
-		return temp;
 	}
 	
-	//Method for sorting the BookArrayList, uses BookComparator class
-	public static void sortBookArrayList() {
-		Collections.sort(BookArrayList, new BookComparator());
+	//Sort the LibraryData's BookArrayList by Author.
+	static class SortByAuthor implements Comparator<Book> {
+		public int compare(Book b1, Book b2) {
+			String b1Author = b1.getBookAuthor();
+	        String b2Author = b2.getBookAuthor();
+	        //uses compareTo method of String class to compare author names
+	        return b1Author.compareTo(b2Author);
+		}
 		
 	}
-
-	public static void checkOutBook(Book b, UserAccount u) {
-		if (b.isAvailable() & Librarian.isUser()) {
-			b.setBookAvailable(false);
-			b.setBookHolder(u.getHolderID());
+	
+	//Method for sorting the BookArrayList, uses comparator chosen by String parameter
+	public static void sortBookArrayList(String choice) {
+		//set to sort by author
+		if (choice.equalsIgnoreCase("author")) {
+			Collections.sort(BookArrayList, new SortByAuthor());
+			//after sorting, save library to file
+			try {
+				writeLibrary();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return;
+		}
+		//set to sort by title
+		if (choice.equalsIgnoreCase("title")) {
+			Collections.sort(BookArrayList, new SortByTitle());
+			//after sorting, save library to file
+			try {
+				writeLibrary();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return;
 		}
 	}
 }

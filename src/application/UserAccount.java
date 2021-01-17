@@ -4,24 +4,32 @@ import java.io.Serializable;
 //This class is the abstract superclass for Library and Patron
 public abstract class UserAccount implements Serializable {
 	//Create a serialVersionUID for serializing the objects stored in ArrayLists 
-	private static final long serialVersionUID = 7973319658373072468L;
+	private static final long serialVersionUID = 2L;
+	
+	//Field to use as a divider for text strings.
+	private static final String DIV = "~~~";
 	
 	//Fields for use in subclasses
 	protected String name = "";
 	protected String ID = "";
-	protected String holderID = name + "~~~" + ID;
+	protected String holderID = name + DIV + ID;
 	
-	//field getter
+	//Constructor
+	public UserAccount (String name, String ID, String holderID) {
+		this.name = name;
+		this.ID = ID;
+		this.holderID = holderID;
+	}
+	
+	//field getters
 	public String getName() {
 		return name;
 	}
 	
-	//field getter
 	public String getID() {
 		return ID;
 	}
-	
-	//field getter
+
 	public String getHolderID() {
 		return holderID;
 	}

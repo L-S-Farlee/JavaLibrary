@@ -9,6 +9,9 @@ public class Librarian extends UserAccount implements Serializable {
 	//Create a serialVersionUID for serializing the objects stored in ArrayLists 
 	private static final long serialVersionUID = 2L;
 	
+	//Field to use as a divider for text strings.
+	private static final String DIV = "~~~";
+	
 	//This field is used to see if current user has Admin privileges
 	private static boolean isAdmin = false;
 	
@@ -17,9 +20,7 @@ public class Librarian extends UserAccount implements Serializable {
 	
 	//Constructor
 	Librarian(String lastName, String firstName, String givenID) {
-		name = lastName+","+firstName;
-		ID = givenID;
-		holderID = lastName+","+firstName+"~~~"+ID;
+		super(lastName+","+firstName, givenID, lastName+","+firstName+DIV+givenID);
 	}
 	
 	//Given strings representing login info, this method
@@ -29,7 +30,7 @@ public class Librarian extends UserAccount implements Serializable {
 		
 		for (int i = 0 ; i < LibrarianData.getLibArrayListSize() ; i++) {
 			
-			if ((tempName+"~~~"+givenID).equals(LibrarianData.getLibAtIndex(i).getHolderID())) {
+			if ((tempName+DIV+givenID).equals(LibrarianData.getLibAtIndex(i).getHolderID())) {
 				isAdmin = true;
 				isUser = true;
 				return;
@@ -38,7 +39,7 @@ public class Librarian extends UserAccount implements Serializable {
 		//If not an admin, check to see if Patron
 		for (int i = 0 ; i < PatronData.getPatronArrayListSize() ; i++) {
 			
-			if ((tempName+"~~~"+givenID).equals(PatronData.getPatronAtIndex(i).getHolderID())) {
+			if ((tempName+DIV+givenID).equals(PatronData.getPatronAtIndex(i).getHolderID())) {
 				isAdmin = false;
 				isUser = true;
 				return;
